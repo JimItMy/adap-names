@@ -8,51 +8,80 @@ export class StringName implements Name {
     protected length: number = 0;
 
     constructor(other: string, delimiter?: string) {
-        throw new Error("needs implementation");
+        this.name = other;
+        this.delimiter = delimiter || DEFAULT_DELIMITER;
+        this.length = other.split(this.delimiter).length;
+        
     }
 
     public asString(delimiter: string = this.delimiter): string {
-        throw new Error("needs implementation");
+        return this.name;
     }
 
     public asDataString(): string {
-        throw new Error("needs implementation");
+        return this.name;
     }
 
     public isEmpty(): boolean {
-        throw new Error("needs implementation");
+        return this.length === 0;
     }
 
     public getDelimiterCharacter(): string {
-        throw new Error("needs implementation");
+        return this.delimiter;
     }
 
     public getNoComponents(): number {
-        throw new Error("needs implementation");
+        return this.name.split(this.delimiter).length;
     }
 
     public getComponent(x: number): string {
-        throw new Error("needs implementation");
+        let nameArray = this.name.split(this.delimiter);
+        if (x < 0 || x >= nameArray.length) {
+            throw new Error("Array index out of bounds");
+        }
+        return nameArray[x];
     }
 
     public setComponent(n: number, c: string): void {
-        throw new Error("needs implementation");
+        let nameArray = this.name.split(this.delimiter);
+        if (n < 0 || n >= nameArray.length) {
+            throw new Error("Array index out of bounds");
+        }
+        nameArray[n] = c;
+        this.name = nameArray.join(this.delimiter);
     }
 
     public insert(n: number, c: string): void {
-        throw new Error("needs implementation");
+        let nameArray = this.name.split(this.delimiter);
+        if (n < 0 || n >= nameArray.length) {
+            throw new Error("Array index out of bounds");
+        }
+        nameArray.splice(n, 0, c);
+        this.name = nameArray.join(this.delimiter);
     }
 
     public append(c: string): void {
-        throw new Error("needs implementation");
+        if (this.length === 0) {
+            this.name = c;
+        }
+        else {
+            this.name = this.name + this.delimiter + c;
+        }
+        this.length++;
     }
 
     public remove(n: number): void {
-        throw new Error("needs implementation");
+        let nameArray = this.name.split(this.delimiter);
+        if (n < 0 || n >= nameArray.length) {
+            throw new Error("Array index out of bounds");
+        }
+        nameArray.splice(n, 1);
+        this.name = nameArray.join(this.delimiter);
     }
 
     public concat(other: Name): void {
-        throw new Error("needs implementation");
+        this.name += other.asString();
+        this.length += other.getNoComponents();
     }
 
 }
