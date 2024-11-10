@@ -6,38 +6,74 @@ export class Name {
     private components: string[] = [];
     private delimiter: string = this.DEFAULT_DELIMITER;
 
+    // @methodtype initialization-method (mutation)
     constructor(other: string[], delimiter?: string) {
-        throw new Error("needs implementation");
+        this.delimiter = delimiter || this.DEFAULT_DELIMITER;
+        this.components = other.slice();
     }
 
-    /** Returns human-readable representation of Name instance */
+    // @methodtype conversion-method (query)
     public asNameString(delimiter: string = this.delimiter): string {
-        throw new Error("needs implementation");
+        const escapedComponents: string[] = [];
+
+        for (let component of this.components) {
+
+            let escapedComponent = "";
+
+            for (let char of component) {
+                if (char == delimiter) {
+                    escapedComponent += this.ESCAPE_CHARACTER + char;
+                }
+                else {
+                    escapedComponent += char;
+                }
+            }
+
+            escapedComponents.push(escapedComponent);
+        }
+        return escapedComponents.join(delimiter);
     }
 
+    // @methodtype get-method (query)
     public getComponent(i: number): string {
-        throw new Error("needs implementation");
+        if (i < 0 || i >= this.components.length) {
+            throw new Error("Array index out of bounds");
+        }
+        return this.components[i];
     }
 
+    // @methodtype set-method (mutation)
     public setComponent(i: number, c: string): void {
-        throw new Error("needs implementation");
+        if (i < 0 || i >= this.components.length) {
+            throw new Error("Array index out of bounds");
+        }
+        this.components[i] = c;
     }
 
-     /** Returns number of components in Name instance */
-     public getNoComponents(): number {
-        throw new Error("needs implementation");
+    // @methodtype get-method (query)
+    public getNoComponents(): number {
+        return this.components.length;
     }
 
+    // @methodtype command-method (mutation)
     public insert(i: number, c: string): void {
-        throw new Error("needs implementation");
+        if (i < 0 || i >= this.components.length) {
+            throw new Error("Array index out of bounds");
+        }
+        this.components.splice(i, 0, c);
     }
 
+    // @methodtype command-method (mutation)
     public append(c: string): void {
-        throw new Error("needs implementation");
+        this.components.push(c);
     }
 
+    // @methodtype command-method (mutation)
     public remove(i: number): void {
-        throw new Error("needs implementation");
+        if (i < 0 || i >= this.components.length) {
+            throw new Error("Array index out of bounds");
+        }
+        this.components.splice(i, 1);
     }
 
 }
