@@ -15,11 +15,12 @@ export class StringName implements Name {
     }
 
     public asString(delimiter: string = this.delimiter): string {
-        return this.name;
+        return this.name.replace(this.delimiter, delimiter);
     }
 
     public asDataString(): string {
-        return this.name;
+        let nameArray = this.name.split(this.delimiter);
+        return nameArray.join(ESCAPE_CHARACTER + DEFAULT_DELIMITER);
     }
 
     public isEmpty(): boolean {

@@ -11,28 +11,11 @@ export class StringArrayName implements Name {
     }
 
     public asString(delimiter: string = this.delimiter): string {
-        const escapedComponents: string[] = [];
-
-        for (let component of this.components) {
-
-            let escapedComponent = "";
-
-            for (let char of component) {
-                if (char == delimiter) {
-                    escapedComponent += ESCAPE_CHARACTER + char;
-                }
-                else {
-                    escapedComponent += char;
-                }
-            }
-
-            escapedComponents.push(escapedComponent);
-        }
-        return escapedComponents.join(delimiter);
+        return this.components.join(delimiter);
     }
 
     public asDataString(): string {
-        return this.components.join(this.delimiter);
+        return this.components.join(ESCAPE_CHARACTER + DEFAULT_DELIMITER);
     }
 
     public isEmpty(): boolean {
