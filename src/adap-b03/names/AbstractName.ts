@@ -5,39 +5,54 @@ export abstract class AbstractName implements Name {
     protected delimiter: string = DEFAULT_DELIMITER;
 
     constructor(delimiter: string = DEFAULT_DELIMITER) {
-        throw new Error("needs implementation");
+        this.delimiter = delimiter;
     }
 
     public asString(delimiter: string = this.delimiter): string {
-        throw new Error("needs implementation");
+        let a = [];
+        for (let i = 0; i < this.getNoComponents(); i++) {
+            a.push(this.getComponent(i));
+        }
+        return a.join(delimiter);
     }
 
     public toString(): string {
-        throw new Error("needs implementation");
+        return this.asString();
     }
 
     public asDataString(): string {
-        throw new Error("needs implementation");
+        return this.asString(ESCAPE_CHARACTER + DEFAULT_DELIMITER);
     }
 
     public isEqual(other: Name): boolean {
-        throw new Error("needs implementation");
+        return (this.getDelimiterCharacter() === other.getDelimiterCharacter()) &&
+        (this.asString() === other.asString());
     }
 
     public getHashCode(): number {
-        throw new Error("needs implementation");
+        const prime = 31;
+        let hash = 0;
+
+        for (let i = 0; i< this.getNoComponents(); i++) {
+            const component = this.getComponent(i);
+            for (let j = 0; j < component.length; j++) {
+                hash = (hash * prime + component.charCodeAt(j)) || 0
+            }
+        }
+
+        return hash;
     }
 
     public clone(): Name {
-        throw new Error("needs implementation");
+        return JSON.parse(JSON.stringify(this));
     }
 
     public isEmpty(): boolean {
-        throw new Error("needs implementation");
+        return this.getNoComponents() === 0;
     }
 
     public getDelimiterCharacter(): string {
-        throw new Error("needs implementation");
+        return this.delimiter;
     }
 
     abstract getNoComponents(): number;
@@ -50,7 +65,9 @@ export abstract class AbstractName implements Name {
     abstract remove(i: number): void;
 
     public concat(other: Name): void {
-        throw new Error("needs implementation");
+        for (let i = 0; i < other.getNoComponents(); i++) {
+            this.append(other.getComponent(i));
+        }
     }
 
 }
