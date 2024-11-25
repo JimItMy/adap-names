@@ -1,15 +1,16 @@
-import { Name, DEFAULT_DELIMITER, ESCAPE_CHARACTER } from "./Name";
+import { DEFAULT_DELIMITER, ESCAPE_CHARACTER } from "../common/Printable";
+import { Name } from "./Name";
 import { AbstractName } from "./AbstractName";
 
 export class StringName extends AbstractName {
     
     protected name: string = "";
-    protected length: number = 0;
+    protected noComponents: number = 0;
 
     constructor(other: string, delimiter?: string) {
         super(delimiter);
         this.name = other;
-        this.length = other.split(this.delimiter).length;
+        this.noComponents = other.split(this.delimiter).length;
     }
 
     getNoComponents(): number {
@@ -41,13 +42,13 @@ export class StringName extends AbstractName {
         this.name = nameArray.join(this.delimiter);
     }
     append(c: string) {
-        if (this.length === 0) {
+        if (this.noComponents === 0) {
             this.name = c;
         }
         else {
             this.name = this.name + this.delimiter + c;
         }
-        this.length++;
+        this.noComponents++;
     }
     remove(i: number) {
         let nameArray = this.name.split(this.delimiter);
@@ -57,4 +58,5 @@ export class StringName extends AbstractName {
         nameArray.splice(i, 1);
         this.name = nameArray.join(this.delimiter);
     }
+
 }
