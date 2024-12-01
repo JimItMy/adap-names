@@ -10,7 +10,7 @@ export class StringName implements Name {
     constructor(other: string, delimiter?: string) {
         this.name = other;
         this.delimiter = delimiter || DEFAULT_DELIMITER;
-        this.length = other.split(this.delimiter).length;
+        this.noComponents = other.split(this.delimiter).length;
         
     }
 
@@ -24,7 +24,7 @@ export class StringName implements Name {
     }
 
     public isEmpty(): boolean {
-        return this.length === 0;
+        return this.noComponents === 0;
     }
 
     public getDelimiterCharacter(): string {
@@ -62,13 +62,13 @@ export class StringName implements Name {
     }
 
     public append(c: string): void {
-        if (this.length === 0) {
+        if (this.noComponents === 0) {
             this.name = c;
         }
         else {
             this.name = this.name + this.delimiter + c;
         }
-        this.length++;
+        this.noComponents++;
     }
 
     public remove(n: number): void {
@@ -82,7 +82,7 @@ export class StringName implements Name {
 
     public concat(other: Name): void {
         this.name += other.asString();
-        this.length += other.getNoComponents();
+        this.noComponents += other.getNoComponents();
     }
 
 }

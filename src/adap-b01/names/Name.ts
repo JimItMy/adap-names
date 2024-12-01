@@ -20,7 +20,7 @@ export class Name {
 
     // @methodtype initialization-method (mutation)
     constructor(other: string[], delimiter?: string) {
-        this.delimiter = delimiter || this.DEFAULT_DELIMITER;
+        this.delimiter = delimiter || DEFAULT_DELIMITER;
         this.components = other.slice();
     }
 
@@ -34,7 +34,7 @@ export class Name {
 
             for (let char of component) {
                 if (char == delimiter) {
-                    escapedComponent += this.ESCAPE_CHARACTER + char;
+                    escapedComponent += ESCAPE_CHARACTER + char;
                 }
                 else {
                     escapedComponent += char;
