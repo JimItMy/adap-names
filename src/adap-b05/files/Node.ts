@@ -1,3 +1,4 @@
+import { createSecureContext } from "tls";
 import { ExceptionType, AssertionDispatcher } from "../common/AssertionDispatcher";
 import { IllegalArgumentException } from "../common/IllegalArgumentException";
 import { InvalidStateException } from "../common/InvalidStateException";
@@ -58,7 +59,18 @@ export class Node {
      * @param bn basename of node being searched for
      */
     public findNodes(bn: string): Set<Node> {
-        throw new Error("needs implementation or deletion");
+        
+        const results = new Set<Node>();
+        const queue: Node[] = [this];
+
+        while (queue.length > 0) {
+            const currentNode = queue.pop();
+            if (!currentNode) continue;
+            if (currentNode.baseName === bn) {
+                results.add(currentNode);
+            }
+        }
+        return results;
     }
 
     protected assertClassInvariants(): void {

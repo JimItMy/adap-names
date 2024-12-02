@@ -2,6 +2,9 @@ import { Equality } from "../common/Equality";
 import { Cloneable } from "../common/Cloneable";
 import { Printable } from "../common/Printable";
 
+export const DEFAULT_DELIMITER: string = '.';
+export const ESCAPE_CHARACTER = '\\';
+
 /**
  * A name is a sequence of string components separated by a delimiter character.
  * Special characters within the string may need masking, if they are to appear verbatim.
@@ -26,19 +29,45 @@ export interface Name extends Cloneable, Printable, Equality {
      */
     getNoComponents(): number;
 
+    /**
+     * Returns component at index i
+     * Expects that index i points to an existing component
+     */
     getComponent(i: number): string;
 
-    /** Expects that new Name component c is properly masked */
+    /** 
+     * Sets (replaces) component at index i
+     * Expects that index i points to an existing component
+     * Expects that component c does not contain delimiter as regular character
+     * Expects that component c is properly masked
+     */
     setComponent(i: number, c: string): void;
 
-    /** Expects that new Name component c is properly masked */
+    /** 
+     * Inserts component at index i, pushing later components one out
+     * Expects that index i points to an existing component
+     * Expects that component c does not contain delimiter as regular character
+     * Expects that component c is properly masked
+     */
     insert(i: number, c: string): void;
 
-    /** Expects that new Name component c is properly masked */
+    /** 
+     * Appends component to Name instance
+     * Expects that component c does not contain delimiter as regular character
+     * Expects that component c is properly masked
+     */
     append(c: string): void;
 
+    /** 
+     * Removes component at index i
+     * Expects that index i points to an existing component
+     */
     remove(i: number): void;
     
+    /**
+     * Appends (concats) other Name instance to this one
+     * @param other Name instance to append
+     */
     concat(other: Name): void;
     
 }
