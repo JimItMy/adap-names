@@ -35,7 +35,9 @@ export class Node {
     }
 
     public getBaseName(): string {
-        return this.doGetBaseName();
+        const result:string = this.doGetBaseName();
+        this.assertClassInvariants();
+        return result;
     }
 
     protected doGetBaseName(): string {
@@ -43,6 +45,7 @@ export class Node {
     }
 
     public rename(bn: string): void {
+        IllegalArgumentException.assertIsNotNullOrUndefined(bn);
         this.doSetBaseName(bn);
     }
 
