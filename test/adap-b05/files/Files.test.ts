@@ -33,9 +33,9 @@ function createFileSystem(): RootNode {
 
 describe("Basic naming test", () => {
   it("test name checking", () => {
-    // let fs: RootNode = createFileSystem();
+    let fs: RootNode = createFileSystem();
     // let ls: Node = [...fs.findNodes("ls")][0];
-    // expect(ls.getFullName().isEqual(new StringName("/usr/bin/ls", '/')));
+    // expect(ls.getFullName().asString()).toBe(new StringName("/usr/bin/ls", '/'));
   });
 });
 
