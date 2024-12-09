@@ -45,7 +45,8 @@ export abstract class AbstractName implements Name {
     }
 
     public isEqual(other: Name): boolean {
-        IllegalArgumentException.assertIsNotNullOrUndefined(other);
+        const condition: boolean = other != null && other != undefined;
+        IllegalArgumentException.assert(condition, "argument is null or undefined");
 
         return this.asDataString() == other.asDataString();
     }
@@ -96,7 +97,7 @@ export abstract class AbstractName implements Name {
         this.assertClassInvariants();
 
         const condition: boolean = this.getNoComponents() == (oldNoComponents + 1);
-        MethodFailedException.assertCondition(condition);
+        MethodFailedException.assert(condition);
     }
 
     protected abstract doInsert(i: number, c: string): void;
@@ -119,7 +120,8 @@ export abstract class AbstractName implements Name {
     protected abstract doRemove(i: number): void;
 
     public concat(other: Name): void {
-        IllegalArgumentException.assertIsNotNullOrUndefined(other);
+        const condition: boolean = other != null && other != undefined;
+        IllegalArgumentException.assert(condition, "argument is null or undefined");
         
         for (let i: number = 0; i < other.getNoComponents(); i++) {
             this.doAppend(other.getComponent(i));
@@ -128,12 +130,12 @@ export abstract class AbstractName implements Name {
 
     protected assertIsValidDelimiter(d: string) {
         let condition: boolean = (d.length == 1);
-        IllegalArgumentException.assertCondition(condition, "invalid delimiter character");
+        IllegalArgumentException.assert(condition, "invalid delimiter character");
     }
 
     protected assertIsValidIndex(i: number) {
         let condition: boolean = (i >= 0) && (i < this.getNoComponents());
-        IllegalArgumentException.assertCondition(condition, "invalid index supplied");
+        IllegalArgumentException.assert(condition, "invalid index supplied");
     }
 
     protected assertDoesNotContainDelChar(c: string) {

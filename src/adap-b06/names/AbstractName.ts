@@ -81,51 +81,53 @@ export abstract class AbstractName implements Name {
         this.assertDoesNotContainDelChar(c);
         this.assertIsProperlyMasked(c);
 
-        this.doSetComponent(i, c);
+        return this.doSetComponent(i, c);
     }
 
-    protected abstract doSetComponent(i: number, c: string): void;
+    protected abstract doSetComponent(i: number, c: string): Name;
 
-    public insert(i: number, c: string) {
+    public insert(i: number, c: string): Name {
         this.assertIsValidIndex(i);
         this.assertDoesNotContainDelChar(c);
         this.assertIsProperlyMasked(c);
         
-        const oldNoComponents: number = this.getNoComponents();
-        this.doInsert(i, c);
+        const newName = this.doInsert(i, c);
 
         this.assertClassInvariants();
 
-        const condition: boolean = this.getNoComponents() == (oldNoComponents + 1);
+        const condition: boolean = newName.getNoComponents() == this.getNoComponents() + 1;
         MethodFailedException.assert(condition);
+        return newName;
     }
 
-    protected abstract doInsert(i: number, c: string): void;
+    protected abstract doInsert(i: number, c: string): Name;
 
-    public append(c: string): void {
+    public append(c: string): Name {
         this.assertDoesNotContainDelChar(c);
         this.assertIsProperlyMasked(c);
         
-        this.doAppend(c);
+        return this.doAppend(c);
     }
 
-    protected abstract doAppend(c: string): void;
+    protected abstract doAppend(c: string): Name;
 
-    public remove(i: number): void {
+    public remove(i: number): Name {
         this.assertIsValidIndex(i);
         
-        this.doRemove(i);
+        return this.doRemove(i);
     }
 
-    protected abstract doRemove(i: number): void;
+    protected abstract doRemove(i: number): Name;
 
-    public concat(other: Name): void {
+    public concat(other: Name): Name {
         const condition: boolean = other != null && other != undefined;
         IllegalArgumentException.assert(condition, "argument is null or undefined");
         
+        let newName = this.clone();
         for (let i: number = 0; i < other.getNoComponents(); i++) {
-            this.doAppend(other.getComponent(i));
+            newName = newName.append(other.getComponent(i));
         }
+        return newName;
     }
 
     protected assertIsValidDelimiter(d: string) {

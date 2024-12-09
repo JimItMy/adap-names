@@ -45,7 +45,8 @@ export class Node {
     }
 
     public rename(bn: string): void {
-        IllegalArgumentException.assertIsNotNullOrUndefined(bn);
+        const condition: boolean = bn != null && bn != undefined;
+        IllegalArgumentException.assert(condition, "argument is null or undefined");
         this.doSetBaseName(bn);
     }
 
